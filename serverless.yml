@@ -1,0 +1,30 @@
+service: java-lambda-service
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: java11
+  memorySize: 1024
+  timeout: 60
+  region: us-east-1
+  environment:
+    STAGE: ${opt:stage, 'dev'}
+
+functions:
+  sqsListenerHandler:
+    handler: com.example.EvaluationSqsMessageListener::handleRequest
+    events:
+      - sqs:
+          arn: arn:aws:sqs:us-east-1:686651121214:TestEvaluar
+
+plugins:
+  - serverless-deployment-bucket
+  - serverless-plugin-optimize
+
+package:
+  artifact: target/testSqsLambda-1.0-SNAPSHOT.jar
+
+custom:
+  deploymentBucket:
+    name: my-serverless-java-lambda-deployment-bucket
