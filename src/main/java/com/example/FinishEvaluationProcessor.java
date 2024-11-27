@@ -17,6 +17,6 @@ public class FinishEvaluationProcessor {
     public void process(UUID evaluationId) {
         System.out.println("Procesando mensaje 1: "+evaluationId);
         Evaluation evaluation = this.evaluationService.findById(evaluationId);
-        System.out.println("Evaluation" + evaluation.toString());
+        System.out.println("Evaluation: " + evaluation.toString());
     }
 }
