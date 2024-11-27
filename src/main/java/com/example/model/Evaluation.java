@@ -8,13 +8,48 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-@Table(name = "evaluation", schema = "evaluation")
+@Table(name = "shop")
 public class Evaluation implements Serializable {
     @Id
-    @Column(columnDefinition = "uuid")
-    private UUID id;
+    @Column
+    private Long id;
 
-    @Column(name = "person_id")
-    private Long personId;
+    @Column(name = "company_id")
+    private Long companyId;
 
+    @Column(name = "name")
+    private String name;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Evaluation{" +
+                "id=" + id +
+                ", companyId=" + companyId +
+                ", name=" + name +
+                '}';
+    }
 }
