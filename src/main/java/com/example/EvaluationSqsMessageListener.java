@@ -3,20 +3,18 @@ package com.example;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.SQSEvent;
-import org.jboss.weld.environment.se.Weld;
-import org.jboss.weld.environment.se.WeldContainer;
 
 import java.util.UUID;
 
 public class EvaluationSqsMessageListener implements RequestHandler<SQSEvent, String> {
 
-    private static final Weld weld = new Weld();
-    private static final WeldContainer container = weld.initialize();
+    private final FinishEvaluationProcessor finishEvaluationProcessor;
 
-    private FinishEvaluationProcessor finishEvaluationProcessor;
+    public EvaluationSqsMessageListener() {
+        finishEvaluationProcessor = CDIContext.getBean(FinishEvaluationProcessor.class);
+    }
 
     public String handleRequest(SQSEvent event, Context context) {
-        finishEvaluationProcessor = container.select(FinishEvaluationProcessor.class).get();
         event.getRecords().forEach(sqsMessage -> {
             UUID evaluationId = null;
             try {
