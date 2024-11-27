@@ -13,10 +13,10 @@ public class EvaluationSqsMessageListener implements RequestHandler<SQSEvent, St
     private static final Weld weld = new Weld();
     private static final WeldContainer container = weld.initialize();
 
-//    private FinishEvaluationProcessor finishEvaluationProcessor;
+    private FinishEvaluationProcessor finishEvaluationProcessor;
 
     public String handleRequest(SQSEvent event, Context context) {
-        FinishEvaluationProcessor finishEvaluationProcessor = container.select(FinishEvaluationProcessor.class).get();
+        finishEvaluationProcessor = container.select(FinishEvaluationProcessor.class).get();
         event.getRecords().forEach(sqsMessage -> {
             UUID evaluationId = null;
             try {
